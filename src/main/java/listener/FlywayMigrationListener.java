@@ -26,6 +26,8 @@ public class FlywayMigrationListener implements ServletContextListener {
                     .dataSource(url, user, password)
                     .load();
             flyway.migrate();
+
+            log.info("Migration passed successfully");
         } catch (Exception e) {
             log.error(e.getMessage());
         }
