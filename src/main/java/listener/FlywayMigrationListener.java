@@ -9,18 +9,15 @@ import org.flywaydb.core.Flyway;
 public class FlywayMigrationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        try {
-            String url = "jdbc:postgresql://postgres.railway.internal:5432/railway";
-            String user = "postgres";
-            String password = "QVsWAivPKWkscvEbLuLwbSiDlmZShnGW";
 
-            Flyway flyway = Flyway.configure()
-                    .dataSource(url, user, password)
-                    .load();
-            flyway.migrate();
-            
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String url = "jdbc:postgresql://postgres.railway.internal:5432/railway";
+        String user = "postgres";
+        String password = "QVsWAivPKWkscvEbLuLwbSiDlmZShnGW";
+
+        Flyway flyway = Flyway.configure()
+                .dataSource(url, user, password)
+                .load();
+        flyway.migrate();
+
     }
 }
