@@ -18,7 +18,12 @@
           <br>
           <h2><a class="page-link" href="<c:url value="/register"/>">Sign in</a> if you are new on our site</h2>
           <br>
-          <h2>Or <a href="<c:url value="/login"/>">Log in</a> if you are already have account</h2>
+          <img src="<c:url value="/img/register.png"/>" alt="register screenshot">
+          <br>
+          <h2>Or <a class="page-link" href="<c:url value="/login"/>">Log in</a> if you are already have account</h2>
+          <br>
+          <img src="<c:url value="/img/login.png"/>" alt="login screenshot"/>
+          <br>
       </div>
   </div>
 <div id="feature-box" class="box">
@@ -26,6 +31,8 @@
           <h1>Figure out what you can do on our site</h1>
           <br>
           <h2>Create your team or join in your friend's one</h2>
+          <br>
+          <img src="<c:url value="/img/you_teams.png"/>" alt="your teams"/>
           <br>
           <h2>Create a project to start your team work</h2>
       </div>
@@ -41,4 +48,5 @@
   </div>
 </div>
 </body>
+<%@include file="/template/base/footer.jsp"%>
 </html>

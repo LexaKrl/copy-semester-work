@@ -1,6 +1,6 @@
 package servlet.authorization;
 
-import dto.UserRegistrationDto;
+import dto.user.UserRegistrationDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/template/register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/template/auth/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 
         boolean isRegistered = userService.getByLogin(login) != null;
 
-        /* Check if user is already registered */
+
         if (!isRegistered) {
             userService.register(UserRegistrationDto.builder()
                     .name(name)
@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
             resp.sendRedirect("/");
         } else {
             req.setAttribute("errorMessage", "Account already exist");
-            req.getRequestDispatcher("/template/register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/template/auth/register.jsp").forward(req, resp);
         }
     }
 }

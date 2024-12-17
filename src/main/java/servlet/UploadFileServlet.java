@@ -1,14 +1,15 @@
 package servlet;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import dto.user.UserEditDto;
 import helpers.CloudinaryHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
+import service.UserService;
+import service.impl.UserServiceImpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/upload")
 @MultipartConfig(
@@ -30,6 +32,11 @@ public class UploadFileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Long id = ((UserEditDto) session.getAttribute("user")).getId();
+        String login = ((UserEditDto) session.getAttribute("user")).getLogin();
+        UserService service = new UserServiceImpl();
+
         Part part = req.getPart("file");
         String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         File file = new File("%s%s%s%s%s".formatted(FILE_PREFIX, File.separator, filename.hashCode() % DIRECTORIES_COUNT,
@@ -45,6 +52,18 @@ public class UploadFileServlet extends HttpServlet {
         outputStream.write(buffer);
         outputStream.close();
 
-        cloudinary.uploader().upload(file, new HashMap<>());
+        String oldUrl = service.getPhotoUrl(login);
+
+        if (!oldUrl.equals(null)) {
+            cloudinary.uploader().destroy(oldUrl, ObjectUtils.emptyMap());
+        }
+
+        Map<String, Object> uploadResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
+        String photoUrl = (String) uploadResult.get("url");
+
+        service.savePhotoUrl(photoUrl, id);
+        session.setAttribute("user", service.getUserEditDto(login));
+
+        resp.sendRedirect("/profile");
     }
 }

@@ -34,7 +34,7 @@
 
                 <label>
                     Password:
-                    <input name="password" type="password" placeholder="Enter your name" required>
+                    <input name="password" type="password" placeholder="Enter your password" required>
                 </label>
             </div>
             <br>

@@ -1,4 +1,4 @@
-package dto;
+package dto.user;
 
 import lombok.*;
 
@@ -7,10 +7,13 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class UserRegistrationDto {
 
+public class UserEditDto {
+    private Long id;
     private String name;
     private String lastname;
     private String login;
     private String password;
+    private String description;
+    private String photoUrl;
 }

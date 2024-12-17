@@ -6,11 +6,19 @@ body {
 
 #wrapper {
     margin: 60px;
+    min-height: calc(100vh - 60px);
 }
 
 .container {
     min-height: 250px;
     padding: 20px 40px 0;
+}
+
+.container img {
+    display: block;
+    margin: 0 auto;
+    max-width: 70%;
+    height: auto;
 }
 
 .box {
@@ -24,6 +32,12 @@ body {
 #greeting-box {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+#greeting-box img {
+    height: auto;
+    width: 100%;
+    display: block;
 }
 
 h1 {

@@ -10,9 +10,8 @@
         </a>
         <div class="nav-left">
             <ul class="nav-links">
-                <li><a href="<c:url value='/about'/>">About</a></li>
-                <li><a href="<c:url value='/features'/>">Features</a></li>
-                <li><a href="<c:url value='/projects'/>">Projects</a></li>
+                <li><a href="<c:url value='/team?type=owner'/>">Teams</a></li>
+                <li><a href="<c:url value='/projects'/>">Recent projects</a></li>
             </ul>
         </div>
         <div class="nav-right">
@@ -20,7 +19,15 @@
                 <c:choose>
                     <c:when test="${isAuthorized}">
                         <li><a href="<c:url value='/profile'/>" class="nav-link">
-                            <img src="<c:url value='/img/tomato_account.png'/>" alt="profile" />
+                            <c:choose>
+                                <c:when test="${empty user.photoUrl}">
+                                    <img src="<c:url value='/img/tomato_account.png'/>" alt="profile" />
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="<c:url value="${user.photoUrl}"/>" alt="${user.name}'s photo" style="height: 60px; width: 60px; border-radius: 50px">
+                                </c:otherwise>
+                            </c:choose>
+                            <div id="account-div">Account</div>
                         </a></li>
                     </c:when>
                     <c:otherwise>

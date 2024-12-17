@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ecefff;
+    margin: 0;
+}
+
+#main-container {
+    margin: 60px auto;
+    max-width: 1200px;
+    min-height: calc(100vh - 60px);
+}
+
+.container {
+    min-height: 250px;
+    padding: 20px 40px 0;
+}
+
+.container img {
+    display: block; /* Change to block for centering */
+    margin: 0 auto; /* Center the image */
+    max-width: 70%; /* Responsive image size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.box {
+    min-height: 300px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-bottom: 20px; /* Space between boxes */
+    padding: 20px; /* Padding inside the box */
+}
+
+h1 {
+    background-color: #cd3f3f;
+    color: aquamarine;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center; /* Center the heading */
+}
+
+h2 {
+    color: #555;
+    padding-bottom: 10px;
+    text-align: center; /* Center the subheadings */
+}
+
+#project-overview {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#project-details {
+    border-radius: 0;
+}
+
+#project-members {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#project-actions {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.page-link {
+    color: #007BFF;
+    text-decoration: none;
+    display: block; /* Make links block elements for better spacing */
+    text-align: center; /* Center the links */
+    margin: 10px 0; /* Space between links */
+}
+
+.page-link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer {
+    height: 60px; /* Set a fixed height for the footer */
+    background-color: rgba(0, 0, 0, 0.8); /* Background color for the footer */
+    text-align: center; /* Center the text */
+    padding: 20px 0; /* Padding for the footer */
+    position: relative; /* Position relative to the main container */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+    color: #fff;
+}
+
