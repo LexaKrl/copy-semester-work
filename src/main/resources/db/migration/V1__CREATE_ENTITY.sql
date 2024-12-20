@@ -78,16 +78,13 @@ create table post (
                       project_id bigint,
                       assignee_id bigint,
                       description text,
-                      status boolean default false,
+                      completed boolean default false,
                       photo_url varchar(255),
     ---------------------------------------
                       constraint post_id_pk primary key (id),
                       constraint post_project_id_fk foreign key (project_id) references project(id) on delete cascade,
                       constraint post_assignee_id_fk foreign key (assignee_id) references users(id) on delete cascade
 );
-
-alter table post
-    add column completed boolean default false;
 
 
 
