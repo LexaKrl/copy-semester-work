@@ -86,6 +86,8 @@ create table post (
                       constraint post_assignee_id_fk foreign key (assignee_id) references users(id) on delete cascade
 );
 
+alter table post
+    add column completed boolean default false;
 
 
 
