@@ -5,61 +5,61 @@
     <title>Project</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/project/project.css'/>">
     <link rel="icon" href="<c:url value='/img/tomatoject_favicon_no_background.png'/>" type="image/png">
+    <script rel="stylesheet" src="<c:url value="/js/project/project.js"/>"></script>
 </head>
 <%@ include file="/template/base/navbar.jsp" %>
 <body>
 <div id="main-container">
     <div id="project-overview" class="box">
         <div class="container">
-            <h1>Project Overview</h1>
-            <p>Welcome to the project page! Here you can find details about your project and its objectives.</p>
+            <h1>${project.name}</h1>
+            <c:if test="${isOwner}">
+                <div id="manage-link">
+                    <a href="<c:url value="/team/${teamId}/project/${project.id}/manage-data"/>" id="member-data" class="button">Manage data</a>
+                    <a href="<c:url value="/team/${teamId}/project/${project.id}/manage-members"/>" id="manage-member" class="button">Manage member</a>
+                    <a href="<c:url value="/team/${teamId}/project/${project.id}/manage-posts"/>" id="manage-post" class="button">Manage post</a>
+                </div>
+            </c:if>
+        </div>
+        <div id="description-box" class="box">
+            <h2>Description</h2>
+            <h3>${project.description}</h3>
         </div>
     </div>
 
-    <div id="project-details" class="box">
-        <div class="container">
-            <h2>Project Details</h2>
-            <p><strong>Project Name:</strong> Awesome Project</p>
-            <p><strong>Description:</strong> This project aims to revolutionize the way we manage tasks.</p>
-            <p><strong>Deadline:</strong> December 31, 2023</p>
-        </div>
+    <div id="projects-button">
+        <%-- for down link href="<c:url value="/team/${team.id}/project/${project.id}/post/${post.id}"/>" --%>
+        <a href="<c:url value="/team/${teamId}/project/${project.id}?type=get-all-posts#post-container"/>" id="get-all-posts" class="button">All</a>
+        <a href="<c:url value="/team/${teamId}/project/${project.id}?type=get-assignee-to-me#post-container"/>" id="get-assignee-to-me" class="button">ToMe</a>
+        <a href="<c:url value="/team/${teamId}/project/${project.id}?type=get-all-completed#post-container"/>" id="get-all-completed" class="button">Completed</a>
     </div>
 
-    <div id="project-members" class="box">
-        <div class="container">
-            <h2>Project Members</h2>
-            <ul>
-                <li>
-                    <h3>John Doe</h3>
-                    <p>Role: Project Manager</p>
-                    <img src="<c:url value='/img/john_doe.png'/>" alt="John Doe" />
-                </li>
-                <li>
-                    <h3>Jane Smith</h3>
-                    <p>Role: Developer</p>
-                    <img src="<c:url value='/img/jane_smith.png'/>" alt="Jane Smith" />
-                </li>
-                <li>
-                    <h3>Emily Johnson</h3>
-                    <p>Role: Designer</p>
-                    <img src="<c:url value='/img/emily_johnson.png'/>" alt="Emily Johnson" />
-                </li>
-                <!-- Add more project members as needed -->
-            </ul>
-        </div>
+    <div id="post-wrapper">
+        <h1>Posts</h1>
+        <c:choose>
+            <c:when test="${not empty posts}">
+                <div id="post-container">
+                    <c:forEach items="${posts}" var="post">
+                        <div class="post-box">
+                            <a href="<c:url value='/team/${teamId}/project/${project.id}/post/${post.id}'/>" class="post-name">
+                                <h2>${post.name}</h2>
+                            </a>
+                            <p><strong>Assignee to:</strong> ${post.assigneeId}</p>
+                            <c:if test="${post.completed}">
+                                <p class="completed-status">Completed!!</p>
+                            </c:if>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div id="post-container">
+                    <h2>There are no posts here...</h2>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
 
-    <div id="project-actions" class="box">
-        <div class="container">
-            <h2>Project Actions</h2>
-            <p>What would you like to do?</p>
-            <ul>
-                <li><a class="page-link" href="<c:url value='/add-task'/>">Add a New Task</a></li>
-                <li><a class="page-link" href="<c:url value='/view-tasks'/>">View All Tasks</a></li>
-                <li><a class="page-link" href="<c:url value='/manage-project'/>">Manage Project</a></li>
-            </ul>
-        </div>
-    </div>
 </div>
 </body>
 <%@ include file="/template/base/footer.jsp" %>

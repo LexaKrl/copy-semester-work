@@ -1,21 +1,20 @@
 package service.impl;
 
 import dao.UserDao;
-import dao.impl.UserDaoImpl;
 import dto.user.UserDto;
 import dto.user.UserEditDto;
 import dto.user.UserRegistrationDto;
 import entity.User;
 import helpers.PasswordHelper;
-import mapper.Mapper;
-import mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
 import service.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = new UserDaoImpl();
+    private final UserDao userDao;
 
     @Override
     public void delete(Long userId) {
@@ -109,5 +108,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getPhotoUrl(String login) {
         return userDao.getPhotoUrl(login);
+    }
+
+    @Override
+    public void deleteFromTeamUser(Long userId) {
+        userDao.deleteFromTeamUser(userId);
+    }
+
+    @Override
+    public List<UserDto> retrieveAllByProjectId(Long projectId) {
+        return userDao.getAllByProjectId(projectId).stream().map(
+                u -> new UserDto(u.getId(), u.getName(), u.getLastname(), u.getLogin(), u.getDescription(), u.getPhotoUrl())
+        ).collect(Collectors.toList());
     }
 }

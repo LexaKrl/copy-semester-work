@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.TeamDao;
 import entity.Team;
+import lombok.RequiredArgsConstructor;
 import mapper.TeamMapper;
 
 import java.sql.PreparedStatement;
@@ -12,9 +13,20 @@ import java.util.List;
 
 import static config.Configuration.getConnection;
 
+@RequiredArgsConstructor
 public class TeamDaoImpl implements TeamDao {
 
-    TeamMapper mapper = new TeamMapper();
+    private final TeamMapper mapper;
+
+    //language=sql
+    private static final String SQL_DELETE_BY_ID = """
+        delete from team where id = ?
+    """;
+
+    //language=sql
+    private static final String SQL_DELETE_FROM_TEAM_USER_BY_ID = """
+        delete from team_user where team_id = ?
+    """;
 
     //language=sql
     private static final String SQL_GET_TEAM_BY_ID = """
@@ -50,7 +62,7 @@ public class TeamDaoImpl implements TeamDao {
 
     //language=sql
     private static final String SQL_UPDATE_BY_ID = """
-        update team set name = ?, password = ? where id = ?;
+        update team set name = ? where id = ?;
     """;
 
 
@@ -67,8 +79,7 @@ public class TeamDaoImpl implements TeamDao {
                     })
                     .orElseThrow(RuntimeException::new);
             statement.setString(1, team.getName());
-            statement.setString(2, team.getPassword());
-            statement.setLong(3, team.getId());
+            statement.setLong(2, team.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -219,5 +230,44 @@ public class TeamDaoImpl implements TeamDao {
         }
     }
 
+    @Override
+    public void delete(Long id) {
+        try {
+            PreparedStatement statement = getConnection()
+                    .map(connection -> {
+                        try {
+                            return connection.prepareStatement(SQL_DELETE_BY_ID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .orElseThrow(RuntimeException::new);
 
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteFromTeamUser(Long id) {
+        try {
+            PreparedStatement statement = getConnection()
+                    .map(connection -> {
+                        try {
+                            return connection.prepareStatement(SQL_DELETE_FROM_TEAM_USER_BY_ID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .orElseThrow(RuntimeException::new);
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

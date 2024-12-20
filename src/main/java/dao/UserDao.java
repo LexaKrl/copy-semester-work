@@ -15,6 +15,8 @@ public interface UserDao {
 
     void delete(Long id);
 
+    void deleteFromTeamUser(Long userId);
+
     void updateInfo(User user);
 
     void updatePassword(String password, String login);
@@ -24,4 +26,6 @@ public interface UserDao {
     String getPasswordByLogin(String login);
 
     String getPhotoUrl(String login);
+
+    List<User> getAllByProjectId(Long projectId);
 }

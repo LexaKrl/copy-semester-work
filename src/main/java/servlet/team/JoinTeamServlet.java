@@ -2,7 +2,6 @@ package servlet.team;
 
 import dto.team.TeamDto;
 import dto.user.UserEditDto;
-import entity.User;
 import helpers.PasswordHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import service.TeamService;
-import service.impl.TeamServiceImpl;
 
 import java.io.IOException;
 
@@ -24,7 +22,8 @@ public class JoinTeamServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TeamService service = new TeamServiceImpl();
+        TeamService teamService = (TeamService) this.getServletContext().getAttribute("teamService");
+
         HttpSession session = req.getSession();
         Long userId = ((UserEditDto) session.getAttribute("user")).getId();
 
@@ -39,16 +38,16 @@ public class JoinTeamServlet extends HttpServlet {
         String teamName = req.getParameter("name");
         String teamPassword = req.getParameter("password");
 
-        TeamDto team = service.retrieveTeamById(teamId);
+        TeamDto team = teamService.findById(teamId);
 
         if (team == null) {
             req.setAttribute("message", "This team doesn't exist, try to enter another team ID");
         } else {
             boolean isCorrectlyEntered = team.getName().equals(teamName) &&
-                    PasswordHelper.passwordIsCorrect(teamPassword, service.retrievePassword(teamId));
+                    PasswordHelper.passwordIsCorrect(teamPassword, teamService.retrievePassword(teamId));
 
             if (isCorrectlyEntered) {
-                service.joinTeam(userId, teamId);
+                teamService.joinTeam(userId, teamId);
                 req.setAttribute("message", "You successfully joined the team!");
             } else {
                 req.setAttribute("message", "Looks like you input incorrect data");

@@ -6,11 +6,13 @@ import dto.team.TeamEditDto;
 import java.util.List;
 
 public interface TeamService {
-    List<TeamDto> retrieveTeamListWhereUserMember(Long memberId);
-    List<TeamDto> retrieveTeamListWhereUserOwner(Long ownerId);
-    TeamDto retrieveTeamById(Long id);
+    void delete(Long id);
+    List<TeamDto> getAllWhereUserMember(Long memberId);
+    List<TeamDto> getAllWhereUserOwner(Long ownerId);
+    TeamDto findById(Long id);
     String retrievePassword(Long id);
     boolean teamExist(Long ownerId, String teamName);
+    boolean isOwner(Long userId, Long teamId);
     boolean teamExist(Long teamId);
     void update(TeamEditDto team);
     void register(TeamEditDto team);

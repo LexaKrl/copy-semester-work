@@ -19,4 +19,8 @@ public class Post {
     private Long assigneeId;
 
     private String description;
+
+    private boolean completed;
+
+    private String photoUrl;
 }

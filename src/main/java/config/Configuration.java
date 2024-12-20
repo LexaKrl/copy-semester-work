@@ -10,8 +10,16 @@ import java.util.Properties;
 
 public class Configuration {
 
+    private static Optional<Connection> connection = Optional.empty();
 
     public static Optional<Connection> getConnection() {
+        if (connection.isEmpty()) {
+            connection = getCon();
+        }
+        return connection;
+    }
+
+    public static Optional<Connection> getCon() {
         String PGHOST = System.getenv("PGHOST");
         String PGPASSWORD = System.getenv("PGPASSWORD");
         String PGPORT = System.getenv("PGPORT");

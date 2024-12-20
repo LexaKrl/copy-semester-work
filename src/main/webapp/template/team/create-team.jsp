@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Create your team</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/css/team/create-join-team.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/team/create-join-manage-team.css"/>">
     <link rel="icon" href="<c:url value='/img/tomatoject_favicon_no_background.png'/>" type="image/png">
 </head>
 <%@ include file="/template/base/navbar.jsp" %>

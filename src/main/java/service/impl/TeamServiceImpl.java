@@ -1,35 +1,42 @@
 package service.impl;
 
 import dao.TeamDao;
-import dao.impl.TeamDaoImpl;
 import dto.team.TeamDto;
 import dto.team.TeamEditDto;
 import entity.Team;
 import helpers.PasswordHelper;
+import lombok.RequiredArgsConstructor;
 import service.TeamService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
-    TeamDao teamDao = new TeamDaoImpl();
+    private final TeamDao teamDao;
 
     @Override
-    public List<TeamDto> retrieveTeamListWhereUserMember(Long memberId) {
+    public void delete(Long id) {
+        teamDao.delete(id);
+        teamDao.deleteFromTeamUser(id);
+    }
+
+    @Override
+    public List<TeamDto> getAllWhereUserMember(Long memberId) {
         return teamDao.getTeamsByUserIdFromTeamUser(memberId).stream().map(
                 team -> new TeamDto(team.getId(), team.getName(), team.getOwnerId())
         ).collect(Collectors.toList());
     }
 
     @Override
-    public List<TeamDto> retrieveTeamListWhereUserOwner(Long ownerId) {
+    public List<TeamDto> getAllWhereUserOwner(Long ownerId) {
         return teamDao.getTeamsByUserId(ownerId).stream().map(
                 team -> new TeamDto(team.getId(), team.getName(), team.getOwnerId())
         ).collect(Collectors.toList());
     }
 
     @Override
-    public TeamDto retrieveTeamById(Long id) {
+    public TeamDto findById(Long id) {
         Team team = teamDao.getById(id);
         if (team == null) {
             return null;
@@ -52,21 +59,20 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public boolean isOwner(Long userId, Long teamId) {
+        return teamDao.getById(teamId).getOwnerId().equals(userId);
+    }
+
+    @Override
     public boolean teamExist(Long teamId) {
         return teamDao.getById(teamId) != null;
     }
 
     @Override
     public void update(TeamEditDto team) {
-        if (team.getPassword() == null) {
-            team.setPassword(retrievePassword(team.getId()));
-        }
-
         teamDao.update(Team.builder()
                 .name(team.getName())
                 .id(team.getId())
-                .ownerId(team.getOwnerId())
-                .password(team.getPassword())
                 .build());
     }
 

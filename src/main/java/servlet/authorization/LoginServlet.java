@@ -1,12 +1,14 @@
 package servlet.authorization;
 
 import dto.user.UserEditDto;
-import dto.user.UserRegistrationDto;
 import helpers.PasswordHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import service.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import service.UserService;
 
 import java.io.IOException;
 
@@ -20,10 +22,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserService userService = (UserService) this.getServletContext().getAttribute("userService");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        UserEditDto user = new UserServiceImpl().getUserEditDto(login);
+        UserEditDto user = userService.getUserEditDto(login);
 
         if (user != null && PasswordHelper.passwordIsCorrect(password, user.getPassword())) {
             /* Add session */

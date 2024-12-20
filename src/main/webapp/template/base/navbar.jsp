@@ -11,7 +11,6 @@
         <div class="nav-left">
             <ul class="nav-links">
                 <li><a href="<c:url value='/team?type=owner'/>">Teams</a></li>
-                <li><a href="<c:url value='/projects'/>">Recent projects</a></li>
             </ul>
         </div>
         <div class="nav-right">

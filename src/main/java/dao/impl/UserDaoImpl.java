@@ -2,8 +2,8 @@ package dao.impl;
 
 import config.Configuration;
 import dao.UserDao;
-import dto.user.UserDto;
 import entity.User;
+import lombok.RequiredArgsConstructor;
 import mapper.UserMapper;
 
 import java.sql.Connection;
@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    UserMapper mapper = new UserMapper();
+    private final UserMapper mapper;
 
     //language=sql
     private static final String SQL_UPDATE_BY_ID = """
@@ -66,6 +67,17 @@ public class UserDaoImpl implements UserDao {
     //language=sql
     private static final String SQL_DELETE = """
                 delete from users where id = ?;
+            """;
+
+    //language=sql
+    private static final String SQL_DELETE_FROM_TEAM_USER_BY_ID = """
+                delete from team_user where user_id = ?;
+            """;
+
+    //language=sql
+    private static final String SQL_GET_ALL_BY_PROJECT_ID = """
+                select * from users where id in
+                (select user_id from user_project where project_id = ?);
             """;
 
     //language=sql
@@ -176,6 +188,26 @@ public class UserDaoImpl implements UserDao {
                     .orElseThrow(RuntimeException::new);
 
             statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteFromTeamUser(Long userId) {
+        try {
+            PreparedStatement statement = getConnection()
+                    .map(connection -> {
+                        try {
+                            return connection.prepareStatement(SQL_DELETE_FROM_TEAM_USER_BY_ID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .orElseThrow(RuntimeException::new);
+            statement.setLong(1, userId);
+
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -296,6 +328,27 @@ public class UserDaoImpl implements UserDao {
                 return resultSet.getString("photo_url");
             }
             return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<User> getAllByProjectId(Long projectId) {
+        List<User> users = new ArrayList<>();
+        try {
+            PreparedStatement statement = getConnection()
+                    .map(connection -> {
+                        try {
+                            return connection.prepareStatement(SQL_GET_ALL_BY_PROJECT_ID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .orElseThrow(RuntimeException::new);
+            statement.setLong(1, projectId);
+
+            return mapper.mapListEntities(statement, users);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

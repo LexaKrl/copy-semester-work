@@ -1,0 +1,106 @@
+body,html {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    color: #333;
+}
+
+#main-container {
+    margin: 100px auto 60px;
+    max-width: 100%;
+    min-height: calc(100vh - 60px);
+    justify-content: center;
+    align-items: center;
+}
+
+#main-delete-create-container {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: #ffffff;
+    border: 1px solid #dcdfe6;
+    height: 20%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-width: 30%;
+    margin: 20px;
+    padding: 20px;
+}
+
+#wrapper-projects {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    background-color: #cd3f3f;
+    color: aquamarine;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+label {
+    color: #000000;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: #af3636;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: darkred;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #cd3f3f;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#message {
+    color: red;
+    padding: 10px;
+    text-align: center;
+}
+
+#manage-projects {
+    width: 80%;
+}

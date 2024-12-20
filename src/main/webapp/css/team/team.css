@@ -50,11 +50,6 @@ h2 {
     text-decoration: underline;
 }
 
-#link-box {
-    display: flex;
-    flex-direction: column;
-}
-
 #link-box a {
     display: inline-block;
     margin: 10px;
@@ -67,15 +62,43 @@ h2 {
     transition: background-color 0.3s;
 }
 
-#link-box a:hover {
+#link-box a:hover, .button:hover {
     background-color: #b53838;
 }
 
 #link-box {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 80px;
     width: auto;
+    display: flex;
+    flex-direction: column;
 }
+
+#project-view {
+    display: flex;
+    justify-content: space-between;
+    transition: transform 0.3s;
+}
+
+#project-view:hover {
+    transform: translateY(-3px);
+}
+
+#member-view {
+    display: flex;
+    justify-content: space-between;
+    direction: ltr;
+}
+
+
+.button {
+    border-radius: 5px;
+    background-color: #cd3f3f;
+    color: aquamarine;
+    box-shadow: none;
+    text-decoration: none;
+}
+
 
 

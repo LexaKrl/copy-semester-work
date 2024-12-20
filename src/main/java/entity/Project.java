@@ -2,8 +2,6 @@ package entity;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Builder
@@ -18,13 +16,5 @@ public class Project {
 
     private Long projectTeamId;
 
-    private Integer employeeNum;
-
-    private List<User> employees;
-
     private String description;
-
-    private List<User> admins;
-
-    private List<Post> postList;
 }

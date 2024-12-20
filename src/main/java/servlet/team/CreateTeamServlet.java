@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.TeamService;
-import service.impl.TeamServiceImpl;
 
 import java.io.IOException;
 
@@ -22,7 +21,7 @@ public class CreateTeamServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TeamService teamService = new TeamServiceImpl();
+        TeamService teamService = (TeamService) this.getServletContext().getAttribute("teamService");
 
         String teamName = req.getParameter("name");
         String teamPassword = req.getParameter("password");

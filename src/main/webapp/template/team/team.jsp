@@ -17,9 +17,11 @@
         <a href="#project-pointer" class="button">
             Projects
         </a>
-        <a href="/team/${team.id}/edit">
-            Edit team
-        </a>
+        <c:if test="${isOwner}">
+            <a href="/team/${team.id}/manage">
+                Manage team
+            </a>
+        </c:if>
     </div>
     <div id="project-box" class="box">
         <c:choose>
@@ -27,11 +29,11 @@
                 <div id="project-table" class="box">
                     <h2>Project name  |  Project id  |  Owner id</h2>
                     <c:forEach items="${projects}" var="project">
-                        <div id="team-view" class="box">
+                        <div id="project-view" class="box">
                             <a href="<c:url value='/team/${team.id}/project/${project.id}'/>">
-                                <span>${project.name}</span>
-                                <span>${project.id}</span>
-                                <span>${project.ownerId}</span>
+                                <span>${project.name}  |</span>
+                                <span>${project.id}  |</span>
+                                <span>${project.projectOwnerId}</span>
                             </a>
                         </div>
                     </c:forEach>
@@ -45,12 +47,18 @@
     </div>
     <div id="member-box" class="box">
         <div id="member-content" class="box">
-            <h2>Member name  |  Member id  |  Member id</h2>
+            <h2>Member name | Member lastname | Member id</h2>
             <c:forEach items="${members}" var="member">
-                <div id="team-view" class="box">
-                    <span>${member.name}</span>
-                    <span>${member.lastname}</span>
+                <div id="member-view" class="box">
+                    <span>${member.name} </span>
+                    <span>${member.lastname} </span>
                     <span>${member.id}</span>
+                    <c:if test="${isOwner && member.id != team.ownerId}">
+                        <form action="/team-delete-user/${member.id}" method="post">
+                            <input id="delete-team-id" name="delete-team-id" type="hidden" value="${team.id}">
+                            <input type="submit" value="kick" class="button">
+                        </form>
+                    </c:if>
                 </div>
             </c:forEach>
         </div>

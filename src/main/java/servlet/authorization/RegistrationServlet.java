@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
-import service.impl.UserServiceImpl;
 
 import java.io.IOException;
 
@@ -21,7 +20,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserService userService = new UserServiceImpl();
+        UserService userService = (UserService) this.getServletContext().getAttribute("userService");
 
         String name = req.getParameter("name");
         String lastname = req.getParameter("lastname");

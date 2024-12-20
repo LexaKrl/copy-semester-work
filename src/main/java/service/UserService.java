@@ -3,7 +3,6 @@ package service;
 import dto.user.UserDto;
 import dto.user.UserEditDto;
 import dto.user.UserRegistrationDto;
-import entity.User;
 
 import java.util.List;
 
@@ -21,4 +20,8 @@ public interface UserService {
     String retrievePassword(String login);
     UserEditDto getUserEditDto(String login);
     String getPhotoUrl(String login);
+
+    void deleteFromTeamUser(Long userId);
+
+    List<UserDto> retrieveAllByProjectId(Long projectId);
 }
