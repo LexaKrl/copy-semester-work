@@ -15,7 +15,7 @@ public class CloudinaryHelper {
     public static Cloudinary getInstance() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\Mi\\IdeaProjects\\semester-work-LexaKrl\\src\\main\\resources\\cloudinary.properties"));
+            properties.load(new FileInputStream("/src/main/resources/cloudinary.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
